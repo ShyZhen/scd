@@ -1,7 +1,7 @@
 spring:
   application:
-    # 设置app名称:
-    name: fmock
+    # 必须设置app名称，要跟config-repo中的`文件名`对应:
+    name: ${APP_NAME:fmock}
   config:
     # 导入Config Server地址:
     import: configserver:${CONFIG_SERVER:http://localhost:8888}
