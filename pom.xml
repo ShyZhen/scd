@@ -7,14 +7,8 @@
     <packaging>pom</packaging>
     <version>1.0</version>
 
-    <!-- 更改继承自parent, parent再继承SpringBoot Starter Parent -->
-    <parent>
-        <artifactId>parent</artifactId>
-        <groupId>com.litblc</groupId>
-        <version>1.0</version>
-    </parent>
-
     <!--  顶级pom文件，只做modules管理，不做其他  -->
+    <!--  也不继承parent，其他所有modules都集成parent，方便单独拆成一个项目  -->
     <name>spring-cloud-demo</name>
     <description>spring-cloud-demo</description>
 

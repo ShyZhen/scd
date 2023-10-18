@@ -6,6 +6,7 @@
         <artifactId>parent</artifactId>
         <groupId>com.litblc</groupId>
         <version>1.0</version>
+        <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>fmock</artifactId>
