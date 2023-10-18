@@ -15,4 +15,16 @@
 
     <name>common</name>
     <description>common</description>
+
+    <build>
+        <!-- 指定输出文件名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 引入创建可执行Jar的插件，Spring Boot项目自带这个插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

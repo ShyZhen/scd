@@ -1,0 +1,29 @@
+# 配置服务器的端口，通常设置为8888:
+server:
+  port: ${APP_PORT:8888}
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    # 从本地文件读取配置时，Config Server激活的profile必须设定为native:
+    active: native
+  cloud:
+    config:
+      server:
+        # 禁用 JdbcEnvironmentRepository 的自动配置。
+        jdbc:
+          enabled: false
+        native:
+          # 设置配置文件的搜索路径:
+          search-locations: file:./config-repo, file:../config-repo, file:../../config-repo
+
+  # 依赖库中有spring-boot-starter-jdbc，必须配置本项目的DataSource
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fmock
+    username: root
+    password: root
+
+
+

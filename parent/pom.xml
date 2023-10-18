@@ -8,6 +8,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <version>3.1.4</version>
+        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -32,22 +33,30 @@
         <redisson-spring-boot-starter.version>3.23.4</redisson-spring-boot-starter.version>               <!-- redis包 -->
         <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>  <!-- 接口文档 swagger UI 本地访问 http://localhost:8080/swagger-ui/index.html-->
         <fastjson.version>2.0.41</fastjson.version>                                                       <!-- json包 https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <spring-cloud-dependencies.version>2022.0.3</spring-cloud-dependencies.version>
     </properties>
 
+    <!-- 共享的依赖管理 -->
     <dependencies>
-
         <!--  在顶级pom引入web组件，否则没有tomcat，无法发起http请求  -->
+        <!--  spring-boot-starter-web包含了spring-boot-starter  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!-- 必须有这个jar才能提示 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+            <scope>compile</scope>
         </dependency>
-
-        <!--    数据库相关 mysql-connector-j是驱动包，使用mysql必须装。driver-class-name中可以指定   -->
+        <!--  对应用程序的状态进行监控 比如http://localhost:8888/actuator/health -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--  数据库相关 mysql-connector-j是驱动包，使用mysql必须装。driver-class-name中可以指定  -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -80,7 +89,51 @@
     </dependencies>
 
     <dependencyManagement>
+        <dependencies>
+            <!-- 引入SpringCloud依赖 -->
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
+            <!-- 内部模块 -->
+            <dependency>
+                <groupId>com.litblc</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.litblc</groupId>
+                <artifactId>config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.litblc</groupId>
+                <artifactId>fmock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.litblc</groupId>
+                <artifactId>push</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
     </dependencyManagement>
 
+    <build>
+        <!-- 指定输出文件名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 引入创建可执行Jar的插件，Spring Boot项目自带这个插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

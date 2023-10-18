@@ -1,0 +1,10 @@
+# push configuration
+# http://localhost:8888/push/default
+server:
+  port: ${APP_PORT:8083}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: ${APP_NAME:push}

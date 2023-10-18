@@ -13,7 +13,26 @@
     <artifactId>config</artifactId>
     <version>1.0</version>
 
-    <name>config</name>
-    <description>config</description>
+    <name>config-server</name>
+    <description>config-配置服务器</description>
 
+    <dependencies>
+        <!--  在config模块中引入spring-cloud-config-server依赖，搭建一个配置服务器  -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- 指定输出文件名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 引入创建可执行Jar的插件，Spring Boot项目自带这个插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
