@@ -22,6 +22,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
+        <!-- 需要使用数据库的模块单独引入，否则必须配置DataSource字段 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
