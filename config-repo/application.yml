@@ -1,4 +1,4 @@
-# 通用common configuration
+# application.yml是所有应用的全局默认配置
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
