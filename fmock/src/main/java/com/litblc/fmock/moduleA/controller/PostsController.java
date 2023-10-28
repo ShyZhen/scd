@@ -1,7 +1,7 @@
-package com.litblc.fmock.controller;
+package com.litblc.fmock.moduleA.controller;
 
-import com.litblc.fmock.entity.Posts;
-import com.litblc.fmock.service.PostsService;
+import com.litblc.fmock.moduleA.entity.Posts;
+import com.litblc.fmock.moduleA.service.PostsService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

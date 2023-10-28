@@ -1,8 +1,8 @@
-package com.litblc.fmock.service;
+package com.litblc.fmock.moduleA.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.litblc.fmock.entity.Posts;
-import com.litblc.fmock.mapper.PostsMapper;
+import com.litblc.fmock.moduleA.entity.Posts;
+import com.litblc.fmock.moduleA.mapper.PostsMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

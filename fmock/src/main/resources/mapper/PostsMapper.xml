@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.litblc.fmock.mapper.PostsMapper">
-    <select id="getAll" resultType="com.litblc.fmock.entity.Posts">
+<mapper namespace="com.litblc.fmock.moduleA.mapper.PostsMapper">
+    <select id="getAll" resultType="com.litblc.fmock.moduleA.entity.Posts">
         SELECT * FROM posts order by id desc
     </select>
 </mapper>

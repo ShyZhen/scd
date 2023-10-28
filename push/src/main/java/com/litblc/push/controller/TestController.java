@@ -38,6 +38,9 @@ public class TestController {
             @RequestBody TestRaw testRaw
             ) {
 
+        // 添加raw参数验证
+        testRaw.validator();
+
         System.out.println(pathId);
         System.out.println(sort_type);
         System.out.println(page);

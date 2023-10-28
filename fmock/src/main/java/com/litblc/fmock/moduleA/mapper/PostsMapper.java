@@ -1,7 +1,7 @@
-package com.litblc.fmock.mapper;
+package com.litblc.fmock.moduleA.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.litblc.fmock.entity.Posts;
+import com.litblc.fmock.moduleA.entity.Posts;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

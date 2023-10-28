@@ -1,4 +1,4 @@
-package com.litblc.fmock.entity;
+package com.litblc.fmock.moduleA.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
