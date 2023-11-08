@@ -9,3 +9,16 @@ server:
 #spring:
 #  application:
 #    name: ${APP_NAME:fmock}
+
+spring:
+  # 缓存设置
+  cache:
+    type: redis
+    redis:
+      # 缓存有效的时间，默认永久有效，默认单位为毫秒，如60000=1m
+      time-to-live: 5m
+      # 如果指定了前缀就用我们指定的前缀，如果没有就默认使用缓存的名字作为前缀
+      key-prefix: "fmock:"
+      use-key-prefix: true
+      # 是否缓存空值，防止缓存穿透
+      # cache-null-values: true

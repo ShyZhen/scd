@@ -13,6 +13,15 @@ spring:
       #password:
       database: ${REDIS_DATABASE:0}
       database1: ${REDIS_DATABASE1:1}
+#      ssl:
+#      timeout:
+#      connectTimeout:
+#      clientName:
+#      cluster:
+#        nodes:
+#      sentinel:
+#        master:
+#        nodes:
 
 storage:
   local:

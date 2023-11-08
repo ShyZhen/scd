@@ -1,15 +1,19 @@
 package com.litblc.fmock.moduleA.controller;
 
+import com.litblc.fmock.moduleA.config.RedisTemplateConfig;
 import com.litblc.fmock.moduleA.entity.Posts;
 import com.litblc.fmock.moduleA.service.PostsService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author zhenhuaixiu
@@ -22,6 +26,9 @@ public class PostsController {
 
     @Autowired
     private PostsService postsService;
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;  // RedisTemplateConfig
 
     public PostsController() {
         System.out.println("test");
@@ -50,7 +57,14 @@ public class PostsController {
 
     @GetMapping(value = "listDesc")
     @Operation(summary = "获取文章列表")
+    @Cacheable(value = "posts")
     public List<Posts> postsListDesc() {
-        return this.postsService.getAllPosts();
+        System.out.println("再次访问这个接口，这句话不会输出，证明走了缓存");
+
+        List<Posts> res = this.postsService.getAllPosts();
+        this.redisTemplate.opsForValue().set("posts1", res, 60L, TimeUnit.SECONDS);  // 手动存储的是字符串
+        this.redisTemplate.opsForValue().set("posts2", res);  // 永久期限，正常json格式
+
+        return res;
     }
 }

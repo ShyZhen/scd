@@ -1,11 +1,13 @@
 package com.litblc.fmock.moduleA.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @Schema(title = "文章Posts表")
 @TableName(value = "posts", autoResultMap = true)
-public class Posts {
+public class Posts implements Serializable {
     // 指定自增策略
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -43,4 +45,14 @@ public class Posts {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
+
+    private String type;
+    private int collectNum;
+    private int commentNum;
+    private int likeNum;
+    private int dislikeNum;
+    private String deleted;
+
+    @TableField(typeHandler = FastjsonTypeHandler.class)
+    private String jsonTest;
 }
