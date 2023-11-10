@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * 使redis保存的数据支持<string,object>，并保存的数据为json字符串
+ * 使redis手动操作保存的数据支持<string,object>，并使保存的数据为json字符串。否则是二进制
  *
  * @Author zhenhuaixiu
  * @Date 2023/11/6 10:51

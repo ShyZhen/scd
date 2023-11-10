@@ -2,6 +2,7 @@ package com.litblc.fmock.moduleA.controller;
 
 import com.litblc.fmock.moduleA.config.RedisTemplateConfig;
 import com.litblc.fmock.moduleA.entity.Posts;
+import com.litblc.fmock.moduleA.mapper.PostsMapper;
 import com.litblc.fmock.moduleA.service.PostsService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping(value = "/fmock")
 public class PostsController {
+
+    @Autowired
+    private PostsMapper postsMapper;
 
     @Autowired
     private PostsService postsService;
@@ -66,5 +70,17 @@ public class PostsController {
         this.redisTemplate.opsForValue().set("posts2", res);  // 永久期限，正常json格式
 
         return res;
+    }
+
+    @GetMapping(value = "mb")
+    @Operation(summary = "mybatis原生用法测试")
+    public void getList() {
+        int userCount = this.postsMapper.getAllCount();
+        String userName = this.postsMapper.getUserName(4);
+        List<Posts> res = this.postsMapper.getList(4);
+
+        System.out.println(userCount);
+        System.out.println(userName);
+        System.out.println(res);
     }
 }
