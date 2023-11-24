@@ -5,6 +5,12 @@ spring:
   config:
     # 导入Config Server地址:
     import: configserver:${CONFIG_SERVER:http://localhost:8888}
+  mail:
+    default-encoding: UTF-8
+    host: smtp.mxhichina.com
+    username: server@fmock.com
+    password: ${MAIL_PASSWORD}
+    from-addr: server@fmock.com
 
 # 使用配置中心了
 #server:
