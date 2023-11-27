@@ -22,10 +22,13 @@ public class TestController {
     @Value("${spring.application.name}")
     public String appName;
 
+    @Value("${spring.mail.password}")
+    public String mailPw;
+
     @Operation(summary = "测试使用配置")
     @GetMapping(value = "/config")
     public String getConfig() {
-        return this.appName;
+        return this.appName + "---" + this.mailPw;
     }
 
     @Operation(summary = "三种接收参数测试")

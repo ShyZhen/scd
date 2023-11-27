@@ -16,7 +16,7 @@ spring:
           enabled: false
         native:
           # 设置配置文件的搜索路径:
-          search-locations: file:./config-repo, file:../config-repo, file:../../config-repo
+          search-locations: classpath:./config-repo, classpath:../config-repo, classpath:../../config-repo
 
 #  parent模块不要直接引入带有jdbc的依赖，最好放在dependencyManagement中，各模块按需引入
 #  如果依赖库中有spring-boot-starter-jdbc，必须配置DataSource

@@ -19,7 +19,6 @@
         <module>fmock</module>
         <module>push</module>
         <module>parent</module>
-        <module>build</module>
     </modules>
 
 </project>
