@@ -4,3 +4,4 @@ target/
 .txlcn/
 *.iml
 *.versionsBackup
+*.bat
