@@ -1,0 +1,43 @@
+spring:
+  application:
+    # 必须设置app名称，要跟config-repo中的`文件名`对应:
+    name: ${APP_NAME:shiro}
+  config:
+    # 导入Config Server地址:
+    import: configserver:${CONFIG_SERVER:http://localhost:8888}
+
+# 使用配置中心了
+#server:
+#  port: 8082
+#  servlet:
+#    context-path: /api
+#
+#spring:
+#  application:
+#    name: ${APP_NAME:SCD项目}
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/fmock
+#    username: root
+#    password: root
+#
+#  data:
+#    redis:
+#      host: ${REDIS_HOST:localhost}
+#      port: ${REDIS_PORT:6379}
+#      #password:
+#      database: ${REDIS_DATABASE:0}
+#      database1: ${REDIS_DATABASE1:1}
+#
+#storage:
+#  local:
+#    # 文件存储根目录:
+#    root-dir: ${STORAGE_LOCAL_ROOT:/var/storage}
+#    max-size: ${STORAGE_LOCAL_MAX_SIZE:102400}
+#    allow-empty: false
+#    allow-types: jpg, png, gif
+#
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true

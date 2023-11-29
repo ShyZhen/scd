@@ -19,6 +19,7 @@
         <module>fmock</module>
         <module>push</module>
         <module>parent</module>
+        <module>shiro</module>
     </modules>
 
 </project>
