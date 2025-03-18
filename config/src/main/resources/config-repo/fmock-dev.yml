@@ -1,5 +1,5 @@
 # fmock configuration
-# http://localhost:8888/fmock/default
+# http://localhost:8888/fmock/dev
 server:
   port: ${APP_PORT:8081}
   servlet:

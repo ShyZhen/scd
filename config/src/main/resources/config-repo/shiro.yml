@@ -5,6 +5,14 @@ server:
   servlet:
     context-path: /
 
+spring:
+  # 模块使用别的数据库
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/laravel
+    username: root
+    password: ${DB_PW:root}
+
 # 这里设置项目名没用，每个模块要单独设置，才能找到对应的配置文件
 #spring:
 #  application:

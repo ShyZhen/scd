@@ -22,6 +22,21 @@ start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzh
 @pause
 ```
 
+### 设置反向代理示例
+```
+    server {
+        listen       8082;
+        server_name  scd.com;
+        location / {
+            proxy_pass http://localhost:8082;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+```
+
 ### 计划 DONE & TODO
 // DONE
 - 结构优化：参考spring-boot，弄个dependencies，最外层只管理模块，然后有单独的依赖管理（project下有a，b，c，parent，四个modules，都要继承自parent么？是的！）

@@ -3,7 +3,8 @@
 server:
   port: ${APP_PORT:8081}
   servlet:
-    context-path: /api
+    #context-path: /api    # 域名后缀，如 http://localhost:8081/api/fmock/listDesc
+    context-path: /        # http://localhost:8081/fmock/listDesc
 
 # 这里设置项目名没用，每个模块要单独设置，才能找到对应的配置文件
 #spring:
@@ -16,7 +17,7 @@ spring:
     type: redis
     redis:
       # 缓存有效的时间，默认永久有效，默认单位为毫秒，如60000=1m
-      time-to-live: 5m
+      time-to-live: 5m  #300s
       # 如果指定了前缀就用我们指定的前缀，如果没有就默认使用缓存的名字作为前缀
       key-prefix: "fmock:"
       use-key-prefix: true
