@@ -35,6 +35,7 @@
         <fastjson.version>2.0.41</fastjson.version>                                                       <!-- json包 https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <spring-cloud-dependencies.version>2022.0.3</spring-cloud-dependencies.version>
         <knife4j.version>4.3.0</knife4j.version>
+        <jjwt.version>0.12.3</jjwt.version>
     </properties>
 
     <!-- 共享的依赖管理，最好不在parent直接引入，而是再弄个dependency项目继承自parent，然后管理一些公共的依赖。而parent只做版本管理，跟springboot一样 -->

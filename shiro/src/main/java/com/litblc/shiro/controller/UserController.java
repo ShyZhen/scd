@@ -1,15 +1,12 @@
 package com.litblc.shiro.controller;
 
-import com.litblc.shiro.entity.Posts;
 import com.litblc.shiro.entity.Users;
-import com.litblc.shiro.mapper.PostsMapper;
 import com.litblc.shiro.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-
-    // 新的加密方式
-    PasswordEncoder DelegatingPasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     @Autowired
     private UserMapper userMapper;
@@ -43,14 +37,15 @@ public class UserController {
     }
 
 
-    @Operation(summary = "测试新的加密方式")
-    @GetMapping("/{id}/status")
-    public long getUserStatus(@PathVariable Long id) {
+    @Operation(summary = "需要登录的接口，获取用户信息")
+    @GetMapping("/info")
+    public String getUserInfo() {
+        System.out.println("userController:需要登录的方法，获取当前登录用户信息");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        System.out.println(authentication.getAuthorities());
+        return username;
 
-        String pw = DelegatingPasswordEncoder.encode("123455");
-        System.out.println(pw);
-
-        return id;
     }
 }
 

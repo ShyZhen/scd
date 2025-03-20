@@ -7,6 +7,9 @@ spring:
     # 导入Config Server地址:
     import: configserver:${CONFIG_SERVER:http://localhost:8888}
 
+jwt:
+  secret: "WalsAT0YZQuZDq09HiAurVKIJZwN1zGBvdAko68IMIM=" #本地秘钥 建议3个月一更换 `openssl rand -base64 32`
+
 # 使用配置中心了
 #server:
 #  port: 8082

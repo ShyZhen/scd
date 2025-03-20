@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,10 @@ import java.time.LocalDateTime;
 @Schema(title = "文章Posts表")
 @TableName(value = "posts", autoResultMap = true)
 public class Posts implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L; // 显式声明
+
     // 指定自增策略
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

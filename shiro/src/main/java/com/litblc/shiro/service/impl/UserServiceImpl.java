@@ -6,7 +6,6 @@ import com.litblc.shiro.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-//import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +18,9 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    //PasswordEncoder DelegatingPasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     @Override
     public void registerUser(Users users) {
@@ -32,9 +30,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         log.info("两种加密方式");
-        users.setPassword(users.getPassword());
-        //users.setPassword(passwordEncoder.encode(users.getPassword()));
-        //users.setPassword(DelegatingPasswordEncoder.encode(users.getPassword()));
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
 
         userMapper.insert(users);
     }

@@ -1,12 +1,17 @@
 package com.litblc.shiro.controller;
 
+import com.litblc.shiro.dto.LoginRequest;
+import com.litblc.shiro.dto.RegisterRequest;
 import com.litblc.shiro.entity.Users;
-import com.litblc.shiro.service.IUserService;
+import com.litblc.shiro.security.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @Author zhenhuaixiu
@@ -27,49 +32,24 @@ public class AuthController {
 
 
     @Autowired
-    public IUserService iUserService;
+    public AuthService authService;
 
-    @Operation(summary = "注册用户")
-    @PostMapping(value = "/register")
-    public Users registerUser(
-            @RequestParam(value = "email", required = true) @Parameter(description = "url参数可以多个") String email,
-            @RequestParam(value = "mobile") @Parameter(description = "url参数可以多个") String mobile,
-            @RequestParam(value = "password") @Parameter(description = "url参数可以多个") String password,
-            @RequestParam(value = "name") @Parameter(description = "url参数可以多个") String name,
-            @RequestParam(value = "gender", defaultValue = "1") @Parameter(description = "url参数可以多个") String gender
-    ) {
-        String uuid = "uuid-asdfsdf";
-
-        Users users = new Users();
-        users.setUuid(uuid).setName(name).setEmail(email).setMobile(mobile).setGender(gender).setPassword(password);
-
-        iUserService.registerUser(users);
-
-        return users;
+    @PostMapping(("/register"))
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
+        try {
+            Users users = authService.register(request);
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error:控制器register", e.getMessage()));
+        }
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "get-login";
+    @PostMapping(("/login"))
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
+        String token = authService.login(request);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @PostMapping("/dologin")
-    public Users doLogin(
-            @RequestParam(value = "name") @Parameter(description = "") String name
-    ) {
-        System.out.println("post-login");
 
-        Users users = iUserService.findByUsername(name);
-        System.out.println(users);
 
-        return users;
-    }
-
-    @Operation(summary = "登录成功后跳转的地方")
-    @GetMapping(value = "/home")
-    public String registerUser() {
-        String str = "登录页";
-
-        return str;
-    }
 }
