@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Posts implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L; // 显式声明
+    private static final long serialVersionUID = -3952401688557010633L; // 显式声明
 
     // 指定自增策略
     @TableId(value = "id", type = IdType.AUTO)
@@ -34,11 +34,11 @@ public class Posts implements Serializable {
     // @TableField(value = "user_id")
     private Long userId;
     private String title;
-    @Schema(title = "摘要，无富文本格式")
+    @Schema(description = "摘要，无富文本格式")
     private String summary;
-    @Schema(title = "海报图片url")
+    @Schema(description = "海报图片url")
     private String poster;
-    @Schema(title = "json格式delta格式富文本")
+    @Schema(description = "json格式delta格式富文本")
     private String content;
 
     // 创建时自动填充

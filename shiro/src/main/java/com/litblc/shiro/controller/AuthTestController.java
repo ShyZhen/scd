@@ -1,12 +1,18 @@
 package com.litblc.shiro.controller;
 
+import com.litblc.shiro.Common.Result.Result;
+import com.litblc.shiro.entity.Posts;
 import com.litblc.shiro.entity.Users;
+import com.litblc.shiro.mapper.PostsMapper;
 import com.litblc.shiro.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author zhenhuaixiu
@@ -16,18 +22,60 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/authtest")
 public class AuthTestController {
+
+    @Autowired
+    public IUserService iUserService;
+
+    @Autowired
+    private PostsMapper postsMapper;
+
     @Value("${spring.application.name}")
     public String appName;
+
+    @Value("${spring.application.desc:默认描述}")
+    public String appDesc;
 
     @Operation(summary = "测试使用配置")
     @GetMapping(value = "/test")
     public String getConfig() {
-        return this.appName;
+        return this.appName + "----" + this.appDesc;
     }
 
 
-    @Autowired
-    public IUserService iUserService;
+    @Operation(summary = "测试使用别的数据库")
+    @GetMapping(value = "/changedb")
+    public String changeDb() {
+
+        int userCount = this.postsMapper.getAllCount();
+        String userName = this.postsMapper.getUserName(1);
+        List<Posts> res = this.postsMapper.getList(4);
+        List<Posts> list = this.postsMapper.getAll();
+
+        System.out.println(userCount);
+        System.out.println(userName);
+        System.out.println(res);
+        System.out.println(list);
+
+        String userName2 = this.postsMapper.getUserName(2);
+        return userName2;
+    }
+
+    @Operation(summary = "三种接收参数测试")
+    @PostMapping(value = "/raw/{path_id}/{sort_type}")
+    public void raw(
+            @PathVariable(value = "path_id") @Parameter(description = "path参数可以多个") long pathId,
+            @PathVariable(value = "sort_type") @Parameter(description = "path参数") String sort_type,
+            @RequestParam(value = "page", required = false, defaultValue = "1") @Parameter(description = "url参数可以多个") long page,
+            @RequestParam(value = "page_size", required = false, defaultValue = "15") @Parameter(description = "url参数") long pageSize
+    ) {
+
+        // 添加raw参数验证
+        System.out.println(pathId);
+        System.out.println(sort_type);
+        System.out.println(page);
+        System.out.println(pageSize);
+
+    }
 
     @Operation(summary = "注册用户")
     @PostMapping(value = "/register")
@@ -48,28 +96,21 @@ public class AuthTestController {
         return users;
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "get-login";
-    }
-
-    @PostMapping("/dologin")
-    public Users doLogin(
-            @RequestParam(value = "name") @Parameter(description = "") String name
-    ) {
-        System.out.println("post-login");
-
-        Users users = iUserService.findByUsername(name);
-        System.out.println(users);
-
-        return users;
-    }
-
-    @Operation(summary = "登录成功后跳转的地方")
+    @Operation(summary = "使用返回类")
     @GetMapping(value = "/home")
-    public String home() {
-        String str = "登录页";
+    public Result<String> home() {
+        String str = "登录页11";
 
-        return str;
+        return Result.success(str,str);
+    }
+
+    @GetMapping(value = "/home2")
+    public Result<?> data() {
+        String str = "登录页";
+        ArrayList list = new ArrayList();
+        list.add(str);
+        list.add(555);
+
+        return Result.successWithData(list);
     }
 }

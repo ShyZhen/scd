@@ -1,5 +1,8 @@
 package com.litblc.shiro.controller;
 
+import com.litblc.shiro.Common.Exception.ServiceException;
+import com.litblc.shiro.Common.Result.HttpStatusEnum;
+import com.litblc.shiro.Common.Result.Result;
 import com.litblc.shiro.dto.LoginRequest;
 import com.litblc.shiro.dto.RegisterRequest;
 import com.litblc.shiro.entity.Users;
@@ -35,19 +38,20 @@ public class AuthController {
     public AuthService authService;
 
     @PostMapping(("/register"))
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
+    public Result<?> register(@RequestBody @Valid RegisterRequest request) {
         try {
             Users users = authService.register(request);
-            return ResponseEntity.ok(users);
+            return Result.successWithData(users);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error:控制器register", e.getMessage()));
+            return Result.fail(HttpStatusEnum.HTTP_UNPROCESSABLE_ENTITY.getCode(), "用户名已存在");
+            // throw new ServiceException(e.getMessage());
         }
     }
 
     @PostMapping(("/login"))
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
+    public Result<?> login(@RequestBody @Valid LoginRequest request) {
         String token = authService.login(request);
-        return ResponseEntity.ok(Map.of("token", token));
+        return Result.successWithData(token);
     }
 
 

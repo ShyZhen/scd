@@ -1,5 +1,6 @@
 package com.litblc.shiro.security;
 
+import com.litblc.shiro.Common.Exception.ServiceException;
 import com.litblc.shiro.dto.LoginRequest;
 import com.litblc.shiro.dto.RegisterRequest;
 import com.litblc.shiro.entity.Users;
@@ -26,7 +27,7 @@ public class AuthService {
      */
     public Users register(RegisterRequest request) {
         if (userMapper.existsByUsername(request.getName())) {
-            throw new RuntimeException("用户名已经存在:"+request.getName());
+            throw new ServiceException("用户名已经存在:"+request.getName());
         }
 
         String uuid = "xxx-111-222";
@@ -41,7 +42,7 @@ public class AuthService {
         if (userMapper.insert(users) > 0) {
             return users;
         } else {
-            throw new RuntimeException("注册失败,请重试");
+            throw new ServiceException("注册失败,请重试");
         }
     }
 

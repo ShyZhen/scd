@@ -33,9 +33,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()  // 登录注册公开
-                        .requestMatchers("/auth/login","/error", "/authtest/test").permitAll()  // 登录注册公开
-                        .anyRequest().authenticated()               // 其他接口需认证
+                        .requestMatchers("/auth/**").permitAll()        // 登录注册公开
+                        .requestMatchers("/api/public/**").permitAll()  // 登录注册公开
+                        .requestMatchers("/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // 登录注册公开
+                        .requestMatchers("/authtest/**","/test/**").permitAll()  // 登录注册公开
+                        .anyRequest().authenticated()                     // 其他接口需认证
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
