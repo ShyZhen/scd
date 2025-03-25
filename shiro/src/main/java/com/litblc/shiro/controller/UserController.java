@@ -2,6 +2,7 @@ package com.litblc.shiro.controller;
 
 import com.litblc.shiro.entity.Users;
 import com.litblc.shiro.mapper.UserMapper;
+import com.litblc.shiro.security.CustomUserDetail;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,16 @@ public class UserController {
     public String getUserInfo() {
         System.out.println("userController:需要登录的方法，获取当前登录用户信息");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        System.out.println(authentication.getAuthorities());
-        return username;
+
+        //String username = authentication.getName();
+
+        CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+        Long userId = userDetail.getUserId();
+        String username = userDetail.getUsername();
+
+        System.out.println("通过token获取用户ID:"+userId);
+
+        return username+"---"+userId;
 
     }
 }

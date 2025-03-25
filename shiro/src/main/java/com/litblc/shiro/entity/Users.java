@@ -22,7 +22,7 @@ public class Users implements Serializable {
     private static final long serialVersionUID = -7391002919175007314L; // 显式声明UID。用于序列化和反序列化的唯一标识符。它用于确保在反序列化时，加载的类与序列化时的类是兼容的。
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Schema(description = "由后端自动生成")
     private String uuid;

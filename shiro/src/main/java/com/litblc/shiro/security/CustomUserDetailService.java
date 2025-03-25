@@ -34,7 +34,17 @@ public class CustomUserDetailService implements UserDetailsService {
                 new SimpleGrantedAuthority("ROLE_" + "USER")  // 实体中有 role 字段就把USER改成 user.getRole()
         );
 
+
+        /* 重写这个继承了UserDetails类的user，使之支持ID字段
         return new org.springframework.security.core.userdetails.User(
+                users.getName(),
+                users.getPassword(),
+                authorities
+        );
+         */
+
+        return new CustomUserDetail(
+                users.getId(),
                 users.getName(),
                 users.getPassword(),
                 authorities

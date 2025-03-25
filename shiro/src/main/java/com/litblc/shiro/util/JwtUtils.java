@@ -1,5 +1,6 @@
 package com.litblc.shiro.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -35,11 +36,12 @@ public class JwtUtils {
      * @param username
      * @return
      */
-    public String generateToken(String username) {
+    public String generateToken(String username, Long userId) {
         System.out.println("JwtUtils:generateToken");
 
         return Jwts.builder()
                 .subject(username)
+                .claim("userId", userId) // 自定义声明id字段
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .signWith(SignatureAlgorithm.HS256, getSignKey())
@@ -74,12 +76,17 @@ public class JwtUtils {
     public String getUsernameFormToken (String token) {
         System.out.println("JwtUtils:getUsernameFormToken");
 
-        return Jwts.parser()
+        Claims claims =  Jwts.parser()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
+                .getPayload();
+
+        String username = claims.getSubject();
+        Long userId = claims.get("userId", Long.class);
+
+        System.out.println("从token中获取用户名和id-getUsernameFormToken:"+userId+"-"+username);
+        return username;
     }
 
 }

@@ -8,7 +8,9 @@ import com.litblc.shiro.mapper.UserMapper;
 import com.litblc.shiro.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,14 +54,26 @@ public class AuthService {
      * @return
      */
     public String login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getName(),
-                        request.getPassword()
-                )
+
+        // 创建认证令牌
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(
+                request.getName(),
+                request.getPassword()
         );
 
-        return  jwtUtils.generateToken(request.getName());
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+            // 获取用户详情（包含用户ID）
+            CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+            Long userId = userDetail.getUserId();
+
+            System.out.println("登录获取userDetail中的userId:"+userId);
+            return  jwtUtils.generateToken(userDetail.getUsername(), userId);
+
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException(e.getMessage());
+        }
     }
 
 
