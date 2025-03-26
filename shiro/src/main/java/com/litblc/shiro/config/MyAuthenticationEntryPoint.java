@@ -27,7 +27,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         // 1. 设置响应格式
         response.setContentType("application/json;charset=UTF-8");
-        //response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
         // 2. 生成统一错误响应
         // 统一响应格式

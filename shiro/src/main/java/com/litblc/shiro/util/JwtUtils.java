@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -34,20 +36,28 @@ public class JwtUtils {
     }
 
     /**
+     * 新·生成安全密钥
+     * @return
+     */
+    private SecretKey getHmacKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
      * 生成token
      * @param username
      * @return
      */
     public String generateToken(String username, Long userId) {
         log.info("JwtUtils:generateToken");
-
         return Jwts.builder()
                 .subject(username)       // 设置 JWT 的主题
                 .issuer("shyZhen")       // 设置 JWT 的发行者，通常是你的应用或服务名称
                 .claim("userId", userId) // 自定义声明id字段
                 .issuedAt(new Date())    // 设置 JWT 的签发时间
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))  // 设置 JWT 的过期时间
-                .signWith(SignatureAlgorithm.HS256, getSignKey())
+                //.signWith(SignatureAlgorithm.HS256, getSignKey())  // 方法要废弃了，使用新的verifyWith
+                .signWith(getHmacKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
@@ -60,7 +70,11 @@ public class JwtUtils {
         log.info("JwtUtils:validateToken");
 
         try {
-            Jwts.parser().setSigningKey(getSignKey()).build().parseSignedClaims(token);
+            Jwts.parser()
+                    // .setSigningKey(getSignKey())  // 方法要废弃了，使用新的verifyWith
+                    .verifyWith(getHmacKey())
+                    .build()
+                    .parseSignedClaims(token);
 
             log.info("验证token没报错");
 
@@ -80,7 +94,8 @@ public class JwtUtils {
         log.info("JwtUtils:getUsernameFormToken");
 
         Claims claims =  Jwts.parser()
-                .setSigningKey(getSignKey())
+                // .setSigningKey(getSignKey())  // 方法要废弃了，使用新的verifyWith
+                .verifyWith(getHmacKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
