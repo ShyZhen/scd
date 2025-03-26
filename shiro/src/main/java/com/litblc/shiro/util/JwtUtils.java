@@ -5,12 +5,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtUtils {
 
@@ -26,7 +28,7 @@ public class JwtUtils {
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
 
-        System.out.println("JwtUtils:getSignKey");
+        log.info("JwtUtils:getSignKey");
 
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -37,13 +39,14 @@ public class JwtUtils {
      * @return
      */
     public String generateToken(String username, Long userId) {
-        System.out.println("JwtUtils:generateToken");
+        log.info("JwtUtils:generateToken");
 
         return Jwts.builder()
-                .subject(username)
+                .subject(username)       // 设置 JWT 的主题
+                .issuer("shyZhen")       // 设置 JWT 的发行者，通常是你的应用或服务名称
                 .claim("userId", userId) // 自定义声明id字段
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
+                .issuedAt(new Date())    // 设置 JWT 的签发时间
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))  // 设置 JWT 的过期时间
                 .signWith(SignatureAlgorithm.HS256, getSignKey())
                 .compact();
     }
@@ -54,16 +57,16 @@ public class JwtUtils {
      * @return
      */
     public boolean validateToken(String token) {
-        System.out.println("JwtUtils:validateToken");
+        log.info("JwtUtils:validateToken");
 
         try {
             Jwts.parser().setSigningKey(getSignKey()).build().parseSignedClaims(token);
 
-            System.out.println("验证token没报错");
+            log.info("验证token没报错");
 
             return true;
         } catch (Exception e) {
-            System.out.println("验证token异常");
+            log.info("验证token异常");
             return false;
         }
     }
@@ -74,7 +77,7 @@ public class JwtUtils {
      * @return
      */
     public String getUsernameFormToken (String token) {
-        System.out.println("JwtUtils:getUsernameFormToken");
+        log.info("JwtUtils:getUsernameFormToken");
 
         Claims claims =  Jwts.parser()
                 .setSigningKey(getSignKey())
@@ -85,7 +88,7 @@ public class JwtUtils {
         String username = claims.getSubject();
         Long userId = claims.get("userId", Long.class);
 
-        System.out.println("从token中获取用户名和id-getUsernameFormToken:"+userId+"-"+username);
+        log.info("从token中获取用户名和id-getUsernameFormToken:"+userId+"-"+username);
         return username;
     }
 

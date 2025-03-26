@@ -3,6 +3,7 @@ package com.litblc.shiro.controller;
 import com.litblc.shiro.Common.Exception.ServiceException;
 import com.litblc.shiro.Common.Result.HttpStatusEnum;
 import com.litblc.shiro.Common.Result.Result;
+import com.litblc.shiro.controller.base.BaseController;
 import com.litblc.shiro.dto.LoginRequest;
 import com.litblc.shiro.dto.RegisterRequest;
 import com.litblc.shiro.entity.Users;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/auth")
-public class AuthController {
+public class AuthController extends BaseController {
     @Value("${spring.application.name}")
     public String appName;
 
@@ -50,8 +51,13 @@ public class AuthController {
 
     @PostMapping(("/login"))
     public Result<?> login(@RequestBody @Valid LoginRequest request) {
-        String token = authService.login(request);
-        return Result.successWithData(token);
+        try {
+            String token = authService.login(request);
+            return Result.successWithData(token);
+        } catch (Exception e) {
+            return Result.fail(HttpStatusEnum.HTTP_UNAUTHORIZED.getCode(), e.getMessage());
+        }
+
     }
 
 

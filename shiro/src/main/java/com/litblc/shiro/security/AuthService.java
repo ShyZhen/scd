@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor  // final类型成员自动依赖注入，省去写构造函数注入
 public class AuthService {
@@ -32,7 +34,7 @@ public class AuthService {
             throw new ServiceException("用户名已经存在:"+request.getName());
         }
 
-        String uuid = "xxx-111-222";
+        String uuid = getUUID();
         Users users = new Users();
         users.setUuid(uuid)
                 .setName(request.getName())
@@ -68,12 +70,20 @@ public class AuthService {
             CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
             Long userId = userDetail.getUserId();
 
-            System.out.println("登录获取userDetail中的userId:"+userId);
+            System.out.println("登录获取userDetail中的userId设置到token中:"+userId);
             return  jwtUtils.generateToken(userDetail.getUsername(), userId);
 
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException(e.getMessage());
         }
+    }
+
+    /**
+     * 生成uuid
+     * @return
+     */
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
 

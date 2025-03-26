@@ -86,12 +86,10 @@ public class AuthTestController {
             @RequestParam(value = "name") @Parameter(description = "url参数可以多个") String name,
             @RequestParam(value = "gender", defaultValue = "1") @Parameter(description = "url参数可以多个") String gender
     ) {
-        String uuid = "uuid-1111111";
+        String uuid = "uuid-xxx";
 
         Users users = new Users();
         users.setUuid(uuid).setName(name).setEmail(email).setMobile(mobile).setGender(gender).setPassword(password);
-
-        iUserService.registerUser(users);
 
         return users;
     }

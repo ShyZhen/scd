@@ -56,7 +56,7 @@ public class GlobalException {
     public Result<?> handleServiceException(ServiceException e) {
         String msg = Optional.ofNullable(e.getMessage()).orElse("服务异常");
         log.error("请求地址'{}', at:\n\t{}", msg, buildSimpleStatckTraceMsg(e));
-        return Result.fail(msg);
+        return Result.fail(HttpStatusEnum.SERVICE.getCode(), msg);
     }
 
     /**
@@ -99,7 +99,7 @@ public class GlobalException {
     public Result<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("参数校验异常'{}'", e.getMessage());
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        return Result.fail(message);
+        return Result.fail(HttpStatusEnum.HTTP_BAD_REQUEST.getCode(), message);
     }
 
 

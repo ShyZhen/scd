@@ -37,22 +37,22 @@ public class CustomUserDetail implements UserDetails {
 
     // 其他账户状态方法（根据需求实现）
     @Override
-    public boolean isAccountNonExpired() {
+    public boolean isAccountNonExpired() {  // 检查账户是否 没过期
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked() {
+    public boolean isAccountNonLocked() {  // 检查账户是否 没有被锁定
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired() {
+    public boolean isCredentialsNonExpired() {  // 检查凭据（密码）是否 没过期
         return true;
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isEnabled() {  // 检查账户是否启用
         return true;
     }
 

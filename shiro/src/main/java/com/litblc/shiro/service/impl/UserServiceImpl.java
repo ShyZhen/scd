@@ -18,23 +18,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
-    @Override
-    public void registerUser(Users users) {
-        if (userMapper.existsByUsername(users.getName())) {
-            log.error("This is an error log message");
-            throw new RuntimeException("用户名已经存在了");
-        }
-
-        log.info("两种加密方式");
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-
-        userMapper.insert(users);
-    }
-
     public Users findByUsername(String username) {
         return userMapper.findByUsername(username);
     }
