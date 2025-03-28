@@ -1,7 +1,8 @@
 package com.litblc.shiro.controller;
 
-import com.litblc.shiro.Common.Result.Result;
+import com.litblc.shiro.common.Result.Result;
 import com.litblc.shiro.controller.base.BaseController;
+import com.litblc.shiro.dto.response.UserResponseDto;
 import com.litblc.shiro.entity.Users;
 import com.litblc.shiro.mapper.UserMapper;
 import com.litblc.shiro.security.CustomUserDetail;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController extends BaseController {
 
     @Autowired
@@ -30,15 +31,25 @@ public class UserController extends BaseController {
 
     @Operation(summary = "测试使用别的数据库")
     @GetMapping(value = "/get/{id}")
-    public Users getUser(
+    public Result<Users> getUser(
             @PathVariable(value = "id") @Parameter(description = "id") long id
     ) {
 
         Users userInfo = this.userMapper.selectById(id);
         System.out.println(userInfo);
 
-        return userInfo;
+        return Result.successWithData(userInfo);
     }
+
+    @GetMapping(value = "/getnew/{id}")
+    public Result<UserResponseDto> getUserNew(
+            @PathVariable(value = "id") @Parameter(description = "id") long id
+    ) {
+
+        UserResponseDto userInfo = this.userMapper.findByIdNew(id);
+        return Result.successWithData(userInfo);
+    }
+
 
 
     @Operation(summary = "需要登录的接口，获取用户信息")
@@ -58,7 +69,7 @@ public class UserController extends BaseController {
         return Result.successWithData(username+"---"+userId);
     }
 
-    @Operation(summary = "控制器中设置http状态码200")
+    @Operation(summary = "控制器中设置http状态码200,大部分都是200的请求,所以不需要指定ResponseEntity,默认200")
     @GetMapping("/info2")
     public ResponseEntity<Result<?>> getUserInfo2() {
         return ResponseEntity.ok(Result.successWithData("控制器中设置http状态码"));

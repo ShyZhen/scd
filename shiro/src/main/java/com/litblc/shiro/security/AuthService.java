@@ -1,8 +1,8 @@
 package com.litblc.shiro.security;
 
-import com.litblc.shiro.Common.Exception.ServiceException;
-import com.litblc.shiro.dto.LoginRequest;
-import com.litblc.shiro.dto.RegisterRequest;
+import com.litblc.shiro.common.Exception.ServiceException;
+import com.litblc.shiro.dto.request.LoginRequestDto;
+import com.litblc.shiro.dto.request.RegisterRequestDto;
 import com.litblc.shiro.entity.Users;
 import com.litblc.shiro.mapper.UserMapper;
 import com.litblc.shiro.util.JwtUtils;
@@ -29,7 +29,7 @@ public class AuthService {
      * @param request
      * @return
      */
-    public Users register(RegisterRequest request) {
+    public Users register(RegisterRequestDto request) {
         if (userMapper.existsByUsername(request.getName())) {
             throw new ServiceException("用户名已经存在:"+request.getName());
         }
@@ -41,6 +41,7 @@ public class AuthService {
                 .setEmail(request.getEmail())
                 .setMobile(request.getMobile())
                 .setGender(request.getGender())
+                .setCreatedAt(request.getCreatedAt())
                 .setPassword(passwordEncoder.encode(request.getPassword()));
 
         if (userMapper.insert(users) > 0) {
@@ -55,7 +56,7 @@ public class AuthService {
      * @param request
      * @return
      */
-    public String login(LoginRequest request) {
+    public String login(LoginRequestDto request) {
 
         // 创建认证令牌
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(

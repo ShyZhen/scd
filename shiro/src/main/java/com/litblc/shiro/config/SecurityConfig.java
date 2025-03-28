@@ -37,12 +37,20 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)  // 基于token，不需要csrf
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        /* 明确指出需要放行的，其他都要认证
                         .requestMatchers("/auth/**").permitAll()        // 放行api
                         .requestMatchers("/api/public/**").permitAll()  // 放行api
                         .requestMatchers("/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // 放行api
                         .requestMatchers("/authtest/**","/test/**").permitAll()                        // 放行api
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()  // 放行api
                         .anyRequest().authenticated()                     // 其他接口需认证
+                         */
+
+                        // 明确指定需要认证的，其他路由(包括不存在的)都放行，可以触发默认error响应
+                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/user/**").authenticated()
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()  // 放行api
+                        .anyRequest().permitAll()                         // 其他接口都放行
                 )
 
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))   // 基于token，不需要session

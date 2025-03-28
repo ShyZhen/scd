@@ -1,6 +1,6 @@
 package com.litblc.shiro.controller;
 
-import com.litblc.shiro.Common.Result.Result;
+import com.litblc.shiro.common.Result.Result;
 import com.litblc.shiro.entity.Posts;
 import com.litblc.shiro.entity.Users;
 import com.litblc.shiro.mapper.PostsMapper;

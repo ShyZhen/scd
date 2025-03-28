@@ -29,9 +29,6 @@ public class JwtUtils {
      */
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
-
-        log.info("JwtUtils:getSignKey");
-
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

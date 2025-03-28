@@ -1,8 +1,8 @@
 package com.litblc.shiro.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.litblc.shiro.Common.Result.HttpStatusEnum;
-import com.litblc.shiro.Common.Result.Result;
+import com.litblc.shiro.common.Result.HttpStatusEnum;
+import com.litblc.shiro.common.Result.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

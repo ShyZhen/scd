@@ -1,4 +1,4 @@
-package com.litblc.shiro.Common.Exception;
+package com.litblc.shiro.common.Exception;
 
 import java.io.Serial;
 
