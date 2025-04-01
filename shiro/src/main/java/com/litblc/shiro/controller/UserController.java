@@ -6,6 +6,7 @@ import com.litblc.shiro.dto.response.UserResponseDto;
 import com.litblc.shiro.entity.Users;
 import com.litblc.shiro.mapper.UserMapper;
 import com.litblc.shiro.security.CustomUserDetail;
+import com.litblc.shiro.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IUserService userService;
 
     @Operation(summary = "测试使用别的数据库")
     @GetMapping(value = "/get/{id}")
@@ -79,6 +83,15 @@ public class UserController extends BaseController {
     @GetMapping("/info3")
     public ResponseEntity<Result<?>> getUserInfo3() {
         return ResponseEntity.badRequest().body(Result.successWithData("控制器中设置http状态码400"));
+    }
+
+    @Operation(summary = "")
+    @GetMapping("/info4")
+    public ResponseEntity<Result<?>> getUserInfo4() {
+        String username = "123456789ABC17";
+
+        Users users = this.userService.findByUsername(username);
+        return ResponseEntity.badRequest().body(Result.successWithData(users));
     }
 }
 

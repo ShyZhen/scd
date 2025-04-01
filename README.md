@@ -22,6 +22,13 @@ start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzh
 @pause
 ```
 
+### 多模块访问测试
+- config http://localhost:8888/fmock/default
+- fmock http://localhost:8081/fmock/listDesc
+- shiro http://localhost:8082/authtest/test
+- push http://localhost:8083/api/test/config
+- swagger http://localhost:8082/swagger-ui/index.html
+
 ### 设置反向代理示例
 ```
     server {

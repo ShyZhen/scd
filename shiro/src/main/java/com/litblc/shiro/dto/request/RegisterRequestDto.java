@@ -18,7 +18,7 @@ public class RegisterRequestDto {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "密码需至少8位，包含字母和数字")
     private String password;
 
-    //@NotBlank(message = "邮箱不能为空")
+    @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不合法")
     private String email;
 

@@ -127,6 +127,12 @@ public class GlobalException {
         return Result.fail(HttpStatusEnum.HTTP_BAD_REQUEST.getCode(), message);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result<?> handleIllegalArgument(IllegalArgumentException e) {
+        log.error("参数校验异常IllegalArgument'{}'", e.getMessage());
+        return Result.fail(HttpStatusEnum.HTTP_BAD_REQUEST.getCode(), e.getMessage());
+    }
 
 
 
