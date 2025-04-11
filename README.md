@@ -1,6 +1,17 @@
 # scd
 spring cloud demo
 
+# 框架代码说明
+### 1. common
+- 提供可复用的代码(工具类、通用枚举、DTO等)，纯代码，无自动配置，仅需标准代码结构，用于跨模块共享通用代码。存放与业务强相关的通用代码。
+### 2. config
+- 代码框架的全局配置，所有的springboot应用项目都需要引用该模块，进行统一的配置管理。Springboot应用支持两种格式的配置文件：yaml格式以及properties格式，且properties格式的配置优先于yaml格式的配置，这里使用yaml的便于后续被properties覆盖。
+### 3. parent
+- 代码框架的父pom，主要作用是代码依赖版本的统一管理。所有模块都要引入该pom作为父pom，并且各模块下代码依赖的版本都需要在该pom中进行管理，不能在其他模型下直接引入版本号。
+### 4. framework
+- 用于配置核心服务的Starter包(如Redis自动配置RedisTemplate、MQ、Log、数据库等)，提供开箱即用的自动化配置和依赖管理。Starter应保持技术中立，只处理技术组件的配置。
+
+# 集成
 ### 打包构建
 - 在scd目录下执行mvn命令`mvn clean package`构建
 
@@ -44,7 +55,7 @@ start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzh
     }
 ```
 
-### 计划 DONE & TODO
+# 计划 DONE & TODO
 // DONE
 - 结构优化：参考spring-boot，弄个dependencies，最外层只管理模块，然后有单独的依赖管理（project下有a，b，c，parent，四个modules，都要继承自parent么？是的！）
 - 配置中心

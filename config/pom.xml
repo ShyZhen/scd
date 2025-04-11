@@ -12,6 +12,7 @@
 
     <artifactId>config</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <name>config-server</name>
     <description>config-配置服务器</description>

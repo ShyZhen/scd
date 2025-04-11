@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 @Accessors(chain = true)
@@ -38,4 +39,41 @@ public class Users implements Serializable {
 
     // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  // 实体类尽量不做特殊处理和时区转换，在dto中转换
     private LocalDateTime createdAt;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Users users = (Users) o;
+
+        if (!Objects.equals(id, users.id)) return false;
+        if (!Objects.equals(uuid, users.uuid)) return false;
+        if (!Objects.equals(name, users.name)) return false;
+        return Objects.equals(mobile, users.mobile);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", gender='" + gender + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

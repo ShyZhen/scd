@@ -11,6 +11,7 @@
 
     <artifactId>push</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <name>push</name>
     <description>push</description>
