@@ -20,6 +20,7 @@
         <module>push</module>
         <module>parent</module>
         <module>shiro</module>
+        <module>data</module>
     </modules>
 
 </project>

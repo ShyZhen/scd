@@ -1,0 +1,13 @@
+# push configuration
+# http://localhost:8888/push/default
+server:
+  port: ${APP_PORT:8084}
+  servlet:
+    context-path: /
+
+
+# 这里设置项目名没用，每个模块要单独设置，才能找到对应的配置文件
+#spring:
+#  application:
+#    name: ${APP_NAME:push}
+

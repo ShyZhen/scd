@@ -5,7 +5,7 @@ spring:
       time-to-live: 600s  # 默认缓存过期时间，可覆盖
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fmock
+    url: jdbc:mysql://localhost:3306/fmock?serverTimezone=UTC
     username: root
     password: ${DB_PW:root}
 

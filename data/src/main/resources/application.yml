@@ -1,0 +1,11 @@
+spring:
+  application:
+    # 必须设置app名称，要跟config-repo中的`文件名`对应:
+    name: ${APP_NAME:data}
+    desc: "测试获取配置变量"
+  config:
+    # 导入Config Server地址:
+    import:
+      - configserver:${CONFIG_SERVER:http://localhost:8888}
+      - classpath:druid.yml
+
