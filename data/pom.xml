@@ -44,6 +44,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
+
+
+        <dependency>
+            <groupId>com.litblc</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,6 +62,10 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <!-- (在parent中进行统一配置)配置构建输出目录,所有子模块输出到父项目的 dist 目录 -->
+        <!--<directory>${project.basedir}/../dist/${project.artifactId}</directory>-->
+
     </build>
 </project>
 

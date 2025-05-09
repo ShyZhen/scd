@@ -21,14 +21,16 @@ spring cloud demo
 @echo off
 
 start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzhen\scd\config\target\config.jar
-
 timeout /t 10 > nul
 
 start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzhen\scd\fmock\target\fmock.jar
-
 timeout /t 10 > nul
 
 start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzhen\scd\push\target\push.jar --MAIL_PASSWORD=xxxxx
+timeout /t 10 > nul
+
+start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzhen\scd\push\target\data.jar --DRUID_USER=xxxxx --DRUID_PW=xxxxx
+timeout /t 10 > nul
 
 @pause
 ```
@@ -61,10 +63,11 @@ start D:\wamp\jdk-17_windows-x64_bin\jdk-17.0.5\bin\java.exe -jar E:\githubShyzh
 - 配置中心
 - 调用别的模块的方法
 - 单模块/多模块打包
+- 统一处理错误信息和状态码
+
 
 // TODO
 - 登录、鉴权相关功能，包括session以及token两种模式
 - 注册中心nacos、Consul
 - 模块服务调用openfeign
 - 整套微服务部署
-- 统一处理错误信息和状态码

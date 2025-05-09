@@ -73,4 +73,16 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <!-- 指定输出文件名 -->
+        <finalName>${project.artifactId}</finalName>
+        <!-- 创建SpringBoot可执行jar -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

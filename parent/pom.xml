@@ -151,5 +151,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <!-- 统一配置构建输出目录,所有子模块输出到父项目的 dist 目录 -->
+        <!--<directory>${project.basedir}/../dist/${project.artifactId}</directory>-->
     </build>
 </project>
